@@ -53,10 +53,7 @@ def startReq(request):
         return render(request, 'StartPage.html')
 
 def planSelect(request):
-<<<<<<< HEAD
-=======
-    print('RECEIVED REQUEST plan select: ', request.method)
->>>>>>> 5c5993292ac80ecf33133221cea2248fbd7e7868
+
     if request.method == 'POST':
         username = request.POST.get('name', '')
         print("Username: ", username)
@@ -87,8 +84,7 @@ def planSelect(request):
         distance = gmaps.distance_matrix(startpoint,endpoint)['rows'][0]['elements'][0]['distance']['value']
         #if(distance > 100000): add code to get mid point and calc nearby places again
         #context={'waystops':waystops}
-       
+
         return render(request, 'PlanSelection.html', { 'waystops':waystops})
     else:
         return render(request, 'StartPage.html')
-
