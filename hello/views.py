@@ -4,7 +4,6 @@ import googlemaps
 
 from .models import Greeting
 
-global_waypoints=[]
 # Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
@@ -85,15 +84,15 @@ def planSelect(request):
         distance = gmaps.distance_matrix(startpoint,endpoint)['rows'][0]['elements'][0]['distance']['value']
         #if(distance > 100000): add code to get mid point and calc nearby places again
         #context={'waystops':waystops}
-        global_waypoints=waystops 
+        request.session['waystops']=waystops
         return render(request, 'PlanSelection.html', { 'waystops':waystops})
     elif request.method == 'GET':
-        n_waypts=len(global_waypoints)
+        waystops=request.session.get('waystops')
         selected_waypoints=[]
         for i in range(n_waypts):
             varname="checkbox"+str(i)
             if(request.GET.get(varname)):
-                selected_waypoints.append(global_waypoints[i])
+                selected_waypoints.append(waystops[i])
         print(selected_waypoints)
     else:
         return render(request, 'StartPage.html')
