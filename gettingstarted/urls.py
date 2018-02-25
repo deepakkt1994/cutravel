@@ -13,9 +13,8 @@ import hello.views
 urlpatterns = [
     url(r'^start$', hello.views.startReq, name='startReq'),
     url(r'^PlanSelection$', hello.views.planSelect, name='PlanSelection'),
-	url(r'^genpdf$', hello.views.html_to_pdf_view, name='genpdf')
+	url(r'^genpdf$', hello.views.html_to_pdf_view, name='genpdf'),
 	url(r'^JoinPlan$', hello.views.joinPlan, name='JoinPlan'),
-
     url(r'^$', hello.views.index, name='index'),
 	url(r'^db', hello.views.db, name='db'),
     path('admin/', admin.site.urls),
