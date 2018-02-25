@@ -7,20 +7,27 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="static/PlanSelection.css">
 </head>
 
 
 <body>
 <div class="container">
 <h2> Plan Selection </h2>
+<form action="/PlanSelection" method="get">
+<div class="div_container">
 <table>
   {% for waystop in waystops %}
 	    <tr>
+       <td> <input type="checkbox" name="checkbox{{ forloop.counter0 }}" value="{{ forloop.counter0 }}" ></td>
        <td> {{ waystop.name }} </td>
 
     </tr>
 {% endfor %}
 </table>
+</div>
+<button type="submit" value="Submit">
+</form>
   <form method = "post" >{% csrf_token %}
     <div class="selection">
 	
