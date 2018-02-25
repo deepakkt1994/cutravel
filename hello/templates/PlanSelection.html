@@ -12,6 +12,9 @@
 
 
 <body>
+<table>
+<tr>
+<td>
 <div class="container">
 <h2> Plan Selection </h2>
 <form action="/PlanSelection" method="get">
@@ -34,7 +37,8 @@
     <button type="submit" class="btn btn-default" style="background-color:green; color:white;">View Itinerary</button>
   </form>
 </div>
-
+</td>
+<td>
 <iframe
   width="800"
   height="600"
@@ -45,5 +49,8 @@
   src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyB2uz-9zoyW7GgkytCGnt636POGkTJyZuU&origin={{ source }}&destination={{ dest }}&language=en" allowfullscreen>
   {% endif %}
 </iframe>
+</td>
+</tr>
+</table>
 </body>
 </html>
