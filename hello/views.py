@@ -115,6 +115,7 @@ def planSelect(request):
         out = gmaps.places_nearby(latandlng,50)
         places = out['results']
         for place in places:
+            place['selected']='false'
             waystops.append(place)
         distance = gmaps.distance_matrix(startpoint,endpoint)['rows'][0]['elements'][0]['distance']['value']
         #if(distance > 100000): add code to get mid point and calc nearby places again
@@ -138,6 +139,8 @@ def planSelect(request):
             if(request.GET.get(varname)):
                 selected_waypoints.append(global_waystops[i])
                 global_waystops[i]['selected']='true'
+            else:
+                global_waystops[i]['selected']='false'
         print(selected_waypoints)
         waystops_name=[]
         for wpt in selected_waypoints:
