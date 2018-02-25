@@ -22,11 +22,11 @@
 <table>
   {% for waystop in waystops %}
 	    <tr>
-       <% if waystop.selected %>
+       {% if waystop.selected %}
        <td> <input type="checkbox" name="checkbox{{ forloop.counter0 }}" value="{{ forloop.counter0 }}" checked ></td>
-       <% else %>
+       {% else %}
        <td> <input type="checkbox" name="checkbox{{ forloop.counter0 }}" value="{{ forloop.counter0 }}" ></td>
-       <% endif %>
+       {% endif %}
        <td> {{ waystop.name }} </td>
 
     </tr>
