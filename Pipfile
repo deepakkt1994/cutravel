@@ -10,11 +10,8 @@ django = "*"
 gunicorn = "*"
 django-heroku = "*"
 googlemaps ="*"
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 93c79131ea0d81be552f8739b7ab79c8e16c36de
 
 [requires]
 
