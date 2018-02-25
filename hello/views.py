@@ -152,7 +152,8 @@ def planSelect(request):
         print(selected_waypoints)
         waystops_name=[]
         for wpt in selected_waypoints:
-            waystops_name.append("place_id:"+wpt["place_id"])
+            #waystops_name.append("place_id:"+wpt["place_id"])
+            waystops_name.append(wpt["name"].replace(" ","+"))
         print(waystops_name)
         gm=gmap_wrapper()
         order=gm.get_direction_order(global_src, global_dest, waystops_name)
