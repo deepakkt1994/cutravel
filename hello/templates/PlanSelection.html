@@ -7,24 +7,18 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="static/PlanSelection.css">
 </head>
 
 
 <body>
-<div class="div_container">
+<div class="container">
 <h2> Plan Selection </h2>
 <table>
-<form name="form1" method="post" action="places_gmap">
-  {% i=0 %}
   {% for waystop in waystops %}
 	    <tr>
-        {% i=i+1 %}
-       <td> <input  id="checkbox{{ i }}" type="checkbox"/>  </td>
        <td> {{ waystop.name }} </td>
 
     </tr>
-</form>
 {% endfor %}
 </table>
   <form method = "post" >{% csrf_token %}
