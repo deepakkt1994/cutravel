@@ -123,7 +123,11 @@ def planSelect(request):
         global_waystops=waystops
         global_src=startpoint.replace(' ','+')
         global_dest=endpoint.replace(' ','+')
-        return render(request, 'PlanSelection.html', { 'waystops':waystops})
+        dct=dict()
+        dct['waystops']=waystops
+        dct['source']=global_src
+        dct['dest']=global_dest
+        return render(request, 'PlanSelection.html', dct)
     elif request.method == 'GET':
         #waystops=request.session.get('waystops')
         selected_waypoints=[]
@@ -141,5 +145,10 @@ def planSelect(request):
         gm=gmap_wrapper()
         order=gm.get_direction_order(global_src, global_dest, waystops_name)
         print(order)
+        dct=dict()
+        dct['waystops']=waystops
+        dct['source']=global_src
+        dct['dest']=global_dest
+        return render(request, 'PlanSelection.html', dct)
     else:
         return render(request, 'StartPage.html')
