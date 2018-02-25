@@ -4,7 +4,12 @@ import googlemaps
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from weasyprint import HTML
+import cStringIO as StringIO
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from django.template import Context
+from django.http import HttpResponse
+from cgi import escape
 
 from .models import Greeting
 
@@ -136,7 +141,7 @@ def planSelect(request):
             randNum = 982545    
             return render(request, 'PlanSelection.html', dct)
         else:
-            return render(request, 'StartPage.html')
+            return render(request, 'PlanSelection.html', dct)
     elif request.method == 'GET':
         #waystops=request.session.get('waystops')
         selected_waypoints=[]
@@ -165,24 +170,29 @@ def planSelect(request):
         dct['dest']=global_dest
         return render(request, 'PlanSelection.html', dct)
     else:
-        return render(request, 'StartPage.html')
+        return render(request, 'PlanSelection.html', dct)
 def joinPlan(request):
     print('RECEIVED REQUEST start: ', request.method)
     if request.method == 'POST':
         return render(request, 'PlanSelection.html')
     else:
         return render(request, 'PlanSelection.html')
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    context = Context(context_dict)
+    html  = template.render(context)
+    result = StringIO.StringIO()
+
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
 def html_to_pdf_view(request):
-    paragraphs = ['first paragraph', 'second paragraph', 'third paragraph']
-    html_string = render_to_string('core/pdf_template.html', {'paragraphs': paragraphs})
-
-    html = HTML(string=html_string)
-    html.write_pdf(target='/tmp/mypdf.pdf');
-
-    fs = FileSystemStorage('/tmp')
-    with fs.open('mypdf.pdf') as pdf:
-        response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
-        return response
-
-    return response
+    #Retrieve data or whatever you need
+    return render_to_pdf(
+            'pdf_template.html',
+            {
+                'pagesize':'A4',
+                'mylist': results,
+            }
+        )
