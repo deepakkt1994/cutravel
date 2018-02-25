@@ -147,7 +147,8 @@ def planSelect(request):
         print(order)
         reordered=[waystops_name[i] for i in order]
         dct=dict()
-        dct['waystops']='|'.join(reordered)
+        dct['waystops']=global_waystops
+        dct['waystops_name']='|'.join(reordered)
         dct['source']=global_src
         dct['dest']=global_dest
         return render(request, 'PlanSelection.html', dct)
