@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^start$', hello.views.startReq, name='startReq'),
     url(r'^PlanSelection$', hello.views.planSelect, name='PlanSelection'),
     url(r'^$', hello.views.index, name='index'),
-	url(r'^db', hello.views.db, name='db'),
+    url(r'^places_gmap$', hello.views.addPlaces, name='addPlaces'),
+	
+        url(r'^db', hello.views.db, name='db'),
     path('admin/', admin.site.urls),
 ]
