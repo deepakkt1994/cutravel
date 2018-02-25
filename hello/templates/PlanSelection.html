@@ -15,11 +15,14 @@
 <div class="div_container">
 <h2> Plan Selection </h2>
 <table>
-  {% for waystop in waystops %}
+<form name="form1" method="post" action="places_gmap.html">
+  {% for (i,waystop) in enumerate(waystops) %}
 	    <tr>
+       <td> <input  id="checkbox{{ i }}" type="checkbox"/>  </td>
        <td> {{ waystop.name }} </td>
 
     </tr>
+</form>
 {% endfor %}
 </table>
   <form method = "post" >{% csrf_token %}
