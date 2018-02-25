@@ -29,8 +29,8 @@ def getNearbyplaces(request):
 	distance = gmaps.distance_matrix('Boulder, CO','Denver, CO')['rows'][0]['elements'][0]['distance']['value']
 	#if(distance > 100000): add code to get mid point and calc nearby places again
 
-	print waystops
-	return waystops
+	print(waystops)
+
 def db(request):
 
     greeting = Greeting()
