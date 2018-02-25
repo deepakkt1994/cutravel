@@ -53,7 +53,6 @@ def startReq(request):
         return render(request, 'StartPage.html')
 
 def planSelect(request):
-    print('RECEIVED REQUEST plan select: ', request.method)
     if request.method == 'POST':
         username = request.POST.get('name', '')
         print("Username: ", username)
@@ -88,3 +87,4 @@ def planSelect(request):
         return render(request, 'PlanSelection.html', { 'waystops':waystops})
     else:
         return render(request, 'StartPage.html')
+
