@@ -1,0 +1,15 @@
+
+.homepage-container {
+    text-align: center;
+}
+.btn {
+    font: bold 20px Arial;
+    width: 30%;
+    height: 10%;
+    vertical-align: middle;
+}
+.homepage-text {
+    text-align: center;
+    margin: 30px 0px;
+    font: 700 2.5em Helvetica;
+}
