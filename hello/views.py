@@ -137,6 +137,7 @@ def planSelect(request):
             varname="checkbox"+str(i)
             if(request.GET.get(varname)):
                 selected_waypoints.append(global_waystops[i])
+                global_waystops[i]['selected']='true'
         print(selected_waypoints)
         waystops_name=[]
         for wpt in selected_waypoints:
