@@ -21,7 +21,10 @@
     width="800"
     height="600"
     frameborder="0" style="border:0"
-    src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyB2uz-9zoyW7GgkytCGnt636POGkTJyZuU&origin=Boulder+CO&destination=Denver+CO&waypoints=Broomfield+CO|Thorton+CO&language=en" allowfullscreen>
+    {% if res.has_waypoint >= 1 %}
+    src="https://www.google.com/maps/embed/v1/directions?key={{ res.api_key }}&origin={{ res.origin }}&destination={{ res.destination }}&waypoints={{ res.waypoints }}&language=en" allowfullscreen>
+    {% else %}
+    src="https://www.google.com/maps/embed/v1/directions?key={{ res.api_key }}&origin={{ res.origin }}&destination={{ res.destination }}&language=en" allowfullscreen>
    </iframe>
 </div>
 </body>

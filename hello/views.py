@@ -65,6 +65,10 @@ def startReq(request):
 def planSelect(request):
     print('RECEIVED REQUEST: ', request.method)
     if request.method == 'POST':
+        res=dict()
+        res['origin']=startpoint
+        res['destination']=endpoint
+        res['waypoints']=''
         return render(request, 'PlanSelection.html')
     else:
         return render(request, 'StartPage.html')
