@@ -3,8 +3,41 @@ from django.http import HttpResponse
 import googlemaps
 
 from .models import Greeting
-global_waystops=[]
 
+
+import urllib.request
+import json
+
+class gmap_wrapper:
+    def __init__(self):
+        self.key_google_direction="AIzaSyD5QetA8YsrJ-jvQFd1hfRNLoNpVM9MHYY"
+        self.key_google_embeded="AIzaSyB2uz-9zoyW7GgkytCGnt636POGkTJyZuU"
+        self.key_google_geocoding="AIzaSyDzaIPhbF4dYeu_wvBlWPL40dqAia4Hfioself"
+    
+    #input: origin_str: str; dest_str: str, ways_point list of str, str should not contain " ", instead use "+"
+    #output: the order of ways_point (list of int, start from 0), not including origin_str/dest_str,
+    #         i.e. same size with ways_point
+    def get_direction_order(self, origin_str, dest_str, ways_point):
+        if(ways_point==None):
+            waypt=""
+        else:
+            waypt="|".join(ways_point)
+            waypt="optimize:true|"+waypt
+        url="https://maps.googleapis.com/maps/api/directions/json?"+ \
+           "origin="+ origin_str+ \
+           "&destination="+dest_str+ \
+           "&waypoints="+waypt+ \
+           "&key="+self.key_google_direction
+#        print(url)
+        res=urllib.request.urlopen(url)
+        data=json.load(res)
+#        print(data['routes'][0]['waypoint_order'])
+        return(data['routes'][0]['waypoint_order'])
+
+
+global_waystops=[]
+global_src=""
+global_dest=""
 # Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
@@ -55,7 +88,7 @@ def startReq(request):
 
 def planSelect(request):
     print('RECEIVED REQUEST plan select: ', request.method)
-    global global_waystops
+    global global_waystops, global_src, global_dest
     if request.method == 'POST':
         username = request.POST.get('name', '')
         print("Username: ", username)
@@ -88,6 +121,8 @@ def planSelect(request):
         #context={'waystops':waystops}
         #request.session['waystops']=waystops
         global_waystops=waystops
+        global_src=startpoint.replace(' ','+')
+        global_dest=endpoint.replace(' ','+')
         return render(request, 'PlanSelection.html', { 'waystops':waystops})
     elif request.method == 'GET':
         #waystops=request.session.get('waystops')
@@ -99,5 +134,12 @@ def planSelect(request):
             if(request.GET.get(varname)):
                 selected_waypoints.append(global_waystops[i])
         print(selected_waypoints)
+        waystops_name=[]
+        for wpt in selected_waypoints:
+            waystops_name.append(wpt["name"].replace(' ','+'))
+        print(waystops_name)
+        gm=gmap_wrapper()
+        order=gm.get_direction_order(global_src, global_dest, waystops_name)
+        print(order)
     else:
         return render(request, 'StartPage.html')
