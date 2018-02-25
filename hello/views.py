@@ -7,6 +7,11 @@ from .models import Greeting
 # Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
+    if(request.GET.get('start')):
+        return render(request,'StartPage.html')
+    if(request.GET.get('join')):
+        return render(request,'StartPage.html')
+
     return render(request, 'index.html')
 
 def getNearbyplaces(request):
@@ -56,7 +61,6 @@ def startReq(request):
         return render(request, 'PlanSelection.html')
     else:
         return render(request, 'StartPage.html')
-
 
 def planSelect(request):
     print('RECEIVED REQUEST: ', request.method)
