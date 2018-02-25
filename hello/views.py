@@ -90,7 +90,8 @@ def planSelect(request):
     else:
         return render(request, 'StartPage.html')
 
-#def addPlaces(request):
+def addPlaces(request):
+    return HttpResponse(str("test"))
 #    print('RECEIVED REQUEST add places: ', request.method)
 #    if request.method == "POST":
 
