@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import googlemaps
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
 
 from .models import Greeting
 
@@ -44,7 +48,7 @@ def index(request):
     if(request.GET.get('start')):
         return render(request,'StartPage.html')
     if(request.GET.get('join')):
-        return render(request,'StartPage.html')
+        return render(request,'JoinPage.html')
 
     return render(request, 'index.html')
 
@@ -101,7 +105,7 @@ def planSelect(request):
         numdays = request.POST.get('numdays', '')
         print("numdays: ", numdays)
         api_key = 'AIzaSyD5QetA8YsrJ-jvQFd1hfRNLoNpVM9MHYY'
-
+		grpType = request.POST.get('grpType', '')
         gmaps = googlemaps.Client(key=api_key)
         geocode_result = gmaps.geocode(startpoint) #$_GET['source']
         latandlng=geocode_result[0]['geometry']['location']
@@ -128,7 +132,12 @@ def planSelect(request):
         dct['waystops']=waystops
         dct['source']=global_src
         dct['dest']=global_dest
-        return render(request, 'PlanSelection.html', dct)
+        if grpType == 'group':
+            randNum = 982545    
+			return render(request, 'PlanSelection.html', dct)
+		else:
+			return render(request, 'StartPage.html')
+
     elif request.method == 'GET':
         #waystops=request.session.get('waystops')
         selected_waypoints=[]
@@ -158,3 +167,23 @@ def planSelect(request):
         return render(request, 'PlanSelection.html', dct)
     else:
         return render(request, 'StartPage.html')
+def joinPlan(request):
+    print('RECEIVED REQUEST start: ', request.method)
+    if request.method == 'POST':
+        return render(request, 'PlanSelection.html')
+    else:
+        return render(request, 'PlanSelection.html')
+def html_to_pdf_view(request):
+    paragraphs = ['first paragraph', 'second paragraph', 'third paragraph']
+    html_string = render_to_string('core/pdf_template.html', {'paragraphs': paragraphs})
+
+    html = HTML(string=html_string)
+    html.write_pdf(target='/tmp/mypdf.pdf');
+
+    fs = FileSystemStorage('/tmp')
+    with fs.open('mypdf.pdf') as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
+        return response
+
+    return response

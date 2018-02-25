@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CU Travel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+<div class="container">
+<h2> Join a Trip </h2>
+<br/>
+<br/>
+<br/>
+<form action ="JoinPlan" method = "post" >{% csrf_token %}
+<label for="code">Enter your group code: </label>
+<br/>
+<input type="text" class="form-control" name="code" placeholder="Enter Group Code">
+<br/>
+<button type="submit" class="btn btn-default" style="background-color:green; color:white;">Go</button>
+</form>
+</div>
+</body>
+</html>
