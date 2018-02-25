@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import googlemaps
 
 from .models import Greeting
+global_waystops=[]
 
 # Create your views here.
 def index(request):
@@ -54,6 +55,7 @@ def startReq(request):
 
 def planSelect(request):
     print('RECEIVED REQUEST plan select: ', request.method)
+    global global_waystops
     if request.method == 'POST':
         username = request.POST.get('name', '')
         print("Username: ", username)
@@ -84,15 +86,18 @@ def planSelect(request):
         distance = gmaps.distance_matrix(startpoint,endpoint)['rows'][0]['elements'][0]['distance']['value']
         #if(distance > 100000): add code to get mid point and calc nearby places again
         #context={'waystops':waystops}
-        request.session['waystops']=waystops
+        #request.session['waystops']=waystops
+        global_waystops=waystops
         return render(request, 'PlanSelection.html', { 'waystops':waystops})
     elif request.method == 'GET':
-        waystops=request.session.get('waystops')
+        #waystops=request.session.get('waystops')
         selected_waypoints=[]
+        n_waypts=len(global_waystops)
+        print(n_waypts)
         for i in range(n_waypts):
             varname="checkbox"+str(i)
             if(request.GET.get(varname)):
-                selected_waypoints.append(waystops[i])
+                selected_waypoints.append(global_waystops[i])
         print(selected_waypoints)
     else:
         return render(request, 'StartPage.html')
