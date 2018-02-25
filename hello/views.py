@@ -105,7 +105,7 @@ def planSelect(request):
         numdays = request.POST.get('numdays', '')
         print("numdays: ", numdays)
         api_key = 'AIzaSyD5QetA8YsrJ-jvQFd1hfRNLoNpVM9MHYY'
-		grpType = request.POST.get('grpType', '')
+        grpType = request.POST.get('grpType', '')
         gmaps = googlemaps.Client(key=api_key)
         geocode_result = gmaps.geocode(startpoint) #$_GET['source']
         latandlng=geocode_result[0]['geometry']['location']
@@ -134,10 +134,9 @@ def planSelect(request):
         dct['dest']=global_dest
         if grpType == 'group':
             randNum = 982545    
-			return render(request, 'PlanSelection.html', dct)
-		else:
-			return render(request, 'StartPage.html')
-
+            return render(request, 'PlanSelection.html', dct)
+        else:
+            return render(request, 'StartPage.html')
     elif request.method == 'GET':
         #waystops=request.session.get('waystops')
         selected_waypoints=[]
