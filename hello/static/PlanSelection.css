@@ -1,6 +1,7 @@
 
-.div_container {
+.div-container {
     width:400px;
     height:600px;
     overflow: scroll;
+    text-align: center;
 }
